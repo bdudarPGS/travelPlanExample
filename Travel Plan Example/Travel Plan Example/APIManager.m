@@ -109,7 +109,8 @@ NSTimeInterval const DataUpdateInterval = 60 * 60;
     
     NSURL *url = [NSURL URLWithString:urlString];
     if (url == nil) {
-        [self endUpdatingType:type];
+        [self endUpdatingType:type withSuccess:NO];
+        [self postNotificationName:updateNotificationName];
         return;
     }
     
@@ -118,7 +119,8 @@ NSTimeInterval const DataUpdateInterval = 60 * 60;
     [NSURLConnection sendAsynchronousRequest:request queue:[[NSOperationQueue alloc] init] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
         
         if (error != nil) {
-            [self endUpdatingType:type];
+            [self endUpdatingType:type withSuccess:NO];
+            [self postNotificationName:updateNotificationName];
             NSLog(@"REQUEST ERROR: %@", error);
             return;
         }
@@ -127,7 +129,8 @@ NSTimeInterval const DataUpdateInterval = 60 * 60;
         NSArray *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&jsonError];
         
         if (jsonError != nil) {
-            [self endUpdatingType:type];
+            [self endUpdatingType:type withSuccess:NO];
+            [self postNotificationName:updateNotificationName];
             NSLog(@"JSON PARSING ERROR: %@", error);
             return;
         }
@@ -155,24 +158,30 @@ NSTimeInterval const DataUpdateInterval = 60 * 60;
             }
         }];
         
-        [self endUpdatingType:type];
+        [self endUpdatingType:type withSuccess:YES];
         [self postNotificationName:updateNotificationName];
     }];
 }
 
-- (void)endUpdatingType:(TravelObjectType)type {
+- (void)endUpdatingType:(TravelObjectType)type withSuccess:(BOOL)success {
     switch (type) {
         case TravelObjectTypeTrain:
             self.isUpdatingTrainObjects = NO;
-            self.trainUpdatedDate = [[NSDate alloc] init];
+            if (success) {
+                self.trainUpdatedDate = [[NSDate alloc] init];
+            }
             break;
         case TravelObjectTypeFlight:
             self.isUpdatingFlightObjects = NO;
-            self.flightUpdatedDate = [[NSDate alloc] init];
+            if (success) {
+                self.flightUpdatedDate = [[NSDate alloc] init];
+            }
             break;
         case TravelObjectTypeBus:
             self.isUpdatingBusObjects = NO;
-            self.busUpdatedDate = [[NSDate alloc] init];
+            if (success) {
+                self.busUpdatedDate = [[NSDate alloc] init];
+            }
             break;
     }
 }

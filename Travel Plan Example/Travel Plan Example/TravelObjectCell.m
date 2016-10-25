@@ -73,17 +73,24 @@
         
         self.logoWidthConstraint.constant = self.logoHeightConstraint.constant * imageAspectRatio;
         [self.logoImageView setImage:image];
-    } else if (travelObject.identifier != nil) {
-        switch (travelObject.type.integerValue) {
-            case TravelObjectTypeTrain:
-                [[APIManager sharedInstance] getImageForTrainObjectWithId:travelObject.identifier.integerValue];
-                break;
-            case TravelObjectTypeFlight:
-                [[APIManager sharedInstance] getImageForFlightObjectWithId:travelObject.identifier.integerValue];
-                break;
-            case TravelObjectTypeBus:
-                [[APIManager sharedInstance] getImageForBusObjectWithId:travelObject.identifier.integerValue];
-                break;
+        
+    } else {
+        
+        [self.logoImageView setImage:nil];
+        
+        if (travelObject.identifier != nil) {
+            
+            switch (travelObject.type.integerValue) {
+                case TravelObjectTypeTrain:
+                    [[APIManager sharedInstance] getImageForTrainObjectWithId:travelObject.identifier.integerValue];
+                    break;
+                case TravelObjectTypeFlight:
+                    [[APIManager sharedInstance] getImageForFlightObjectWithId:travelObject.identifier.integerValue];
+                    break;
+                case TravelObjectTypeBus:
+                    [[APIManager sharedInstance] getImageForBusObjectWithId:travelObject.identifier.integerValue];
+                    break;
+            }
         }
     }
 }

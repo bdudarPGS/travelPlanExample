@@ -169,7 +169,7 @@
 				TargetAttributes = {
 					92447A1B1DBE35A500835F1C = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = R44HG3KLUG;
+						LastSwiftMigration = 0800;
 					};
 				};
 			};
@@ -342,6 +342,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Travel Plan Example/Travel Plan Example-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 2.3;
 			};
 			name = Debug;
 		};
@@ -360,6 +361,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.pgs-soft.Travel-Plan-Example";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Travel Plan Example/Travel Plan Example-Bridging-Header.h";
+				SWIFT_VERSION = 2.3;
 			};
 			name = Release;
 		};
